@@ -35,17 +35,14 @@ public class FCMMessagingService extends FirebaseMessagingService {
         Log.i(TAG,"onMessageReceived() from:"+from);
         if (remoteMessage.getData().size()>0){
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-
-            String tile=remoteMessage.getData().get("title");
-            String body=remoteMessage.getData().get("body");
-            String titulo=remoteMessage.getData().get("titulo");
-            String detalle=remoteMessage.getData().get("detalle");
+            String title = remoteMessage.getData().get("title");
+            String detail = remoteMessage.getData().get("detail");
             String foto=remoteMessage.getData().get("foto");
-            mayorqueoreo(titulo,detalle,foto);
+            mayorqueoreo(title,detail,foto);
         }
     }
 
-    private void mayorqueoreo(String titulo, String detalle, String foto) {
+    private void mayorqueoreo(String title, String detail, String foto) {
         String id="mensaje";
         NotificationManager nm=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder=new NotificationCompat.Builder(this,id);
@@ -60,9 +57,9 @@ public class FCMMessagingService extends FirebaseMessagingService {
             Bitmap imf_foto= Picasso.get().load(foto).get();
             builder.setAutoCancel(true)
                     .setWhen(System.currentTimeMillis())
-                    .setContentTitle(titulo)
+                    .setContentTitle(title)
                     .setSmallIcon(R.drawable.taqueria_logo)
-                    .setContentText(detalle)
+                    .setContentText(detail)
                     .setStyle(new NotificationCompat.BigPictureStyle()
                             .bigPicture(imf_foto).bigLargeIcon(null))
                     .setContentIntent(clicknoti())
